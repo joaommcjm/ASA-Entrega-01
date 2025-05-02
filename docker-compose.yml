@@ -1,0 +1,5 @@
+services:
+  joao-container:
+    build: ./app1
+    ports:
+      - "8080:80"
