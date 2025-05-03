@@ -99,8 +99,8 @@ A apresentação aborda:
 
 ## 👥 Equipe
 
-- Nome do Aluno 1 - [@eduardobezerraz](https://github.com/eduardobezerraz)
-- Nome do Aluno 2 - [@joaommcjm](https://github.com/joaommcjm)
-- Nome do Aluno 3 - [@joao-victor212](https://github.com/joao-victor212)
+- José Eduardo Bezerra de Medeiros - [@eduardobezerraz](https://github.com/eduardobezerraz)
+- João Marcos Medeiros Costa - [@joaommcjm](https://github.com/joaommcjm)
+- João Victor do Nascimento Mendonça - [@joao-victor212](https://github.com/joao-victor212)
 
 ---
