@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Mastery - Fundamentos e Containers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .docker-gradient {
+            background: linear-gradient(135deg, #2496ed 0%, #0e5a8a 100%);
+        }
+        .container-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .card-3d {
+            transform: rotateY(0deg);
+            transition: transform 0.5s ease;
+        }
+        .card-3d:hover {
+            transform: rotateY(10deg) scale(1.03);
+        }
+        .terminal {
+            background-color: #1e1e1e;
+            font-family: 'Courier New', monospace;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .terminal-header {
+            background-color: #3a3a3a;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .terminal-body {
+            min-height: 200px;
+        }
+        .command::before {
+            content: "$ ";
+            color: #4CAF50;
+        }
+        .docker-logo {
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
+        .animated-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .animated-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2496ed;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+        .animated-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="docker-gradient text-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" alt="Docker Logo" class="h-10 docker-logo">
+                    <span class="text-xl font-bold">Docker Mastery</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#conceitos" class="animated-underline">Conceitos</a>
+                    <a href="#componentes" class="animated-underline">Componentes</a>
+                    <a href="#github" class="animated-underline">GitHub</a>
+                </div>
+                <button class="md:hidden focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="docker-gradient text-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Dominando os Fundamentos do Docker</h1>
+            <p class="text-xl md:text-2xl mb-12 max-w-3xl mx-auto">Conceitos essenciais e componentes principais em um projeto colaborativo entre comunicação de containers.</p>
+            <div class="flex justify-center">
+                <a href="https://github.com/joaommcjm/ASA-Entrega-01" target="_blank" class="border-2 border-white hover:bg-white hover:text-blue-800 font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
+                    Ver Projeto no GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conceitos Fundamentais -->
+    <section id="conceitos" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Conceitos Fundamentais do Docker</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="container-3d">
+                    <div class="card-3d bg-white p-8 rounded-xl shadow-lg h-full flex flex-col">
+                        <div class="text-blue-600 mb-4">
+                            <i class="fas fa-box-open text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Containers</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">
+                            Unidades leves e portáteis que empacotam código e dependências. Isolados do sistema host, compartilham o kernel do OS mas rodam processos isolados.
+                        </p>
+                        <div class="terminal p-4 rounded-lg bg-gray-100">
+                            <p class="command text-gray-800">docker run -p 53:53/udp -p 53:53/tcp --name bind9 ubuntu-bind</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="container-3d">
+                    <div class="card-3d bg-white p-8 rounded-xl shadow-lg h-full flex flex-col">
+                        <div class="text-blue-600 mb-4">
+                            <i class="fas fa-cube text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Imagens</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">
+                            Modelos somente-leitura com instruções para criar containers. Compostas por camadas que representam alterações no sistema de arquivos.
+                        </p>
+                        <div class="terminal p-4 rounded-lg bg-gray-100">
+                            <p class="command text-gray-800">docker build -t ubuntu-bind .</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="container-3d">
+                    <div class="card-3d bg-white p-8 rounded-xl shadow-lg h-full flex flex-col">
+                        <div class="text-blue-600 mb-4">
+                            <i class="fas fa-file-alt text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Dockerfile</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">
+                            Script com instruções para construir imagens. Define base image, comandos de instalação, variáveis de ambiente e pontos de entrada.
+                        </p>
+                        <div class="terminal p-4 rounded-lg bg-gray-100">
+                            <p class="command text-gray-800">FROM nginx:latest</p>
+                            <p class="command text-gray-800">COPY index.html /usr/share/nginx/html/index.html</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Componentes Docker -->
+    <section id="componentes" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Principais Componentes da Plataforma</h2>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Architecture" class="w-full max-w-lg mx-auto floating">
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-server text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-800">Docker Daemon</h3>
+                                <p class="text-gray-600">
+                                    Serviço em segundo plano que gerencia objetos Docker (imagens, containers, redes, volumes). Responsável por construir e rodar containers.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-terminal text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-800">Docker CLI</h3>
+                                <p class="text-gray-600">
+                                    Interface de linha de comando para interagir com o Docker Daemon. Permite executar comandos como build, run, push e pull.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-archive text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-800">Docker Registry</h3>
+                                <p class="text-gray-600">
+                                    Repositório para armazenar e distribuir imagens. Docker Hub é o registry público padrão, mas é possível usar registries privados.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-project-diagram text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-800">Docker Compose</h3>
+                                <p class="text-gray-600">
+                                    Ferramenta para definir e rodar aplicações multi-container. Usa arquivo YAML para configurar serviços, redes e volumes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trabalho Colaborativo no GitHub -->
+    <section id="github" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Trabalho Colaborativo no GitHub</h2>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12">              
+                <div class="lg:w-1/2">
+                    <div class="mt-12">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <img src="https://avatars.githubusercontent.com/u/12345678?v=4" class="w-16 h-16 rounded-full mx-auto mb-3">
+                                <h4 class="font-bold">José Eduardo</h4>
+                                <p class="text-sm text-gray-600">@eduardobezerraz</p>
+                                <div class="mt-2">
+                                    <a href="#" class="text-blue-500 hover:text-blue-700"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <img src="https://avatars.githubusercontent.com/u/23456789?v=4" class="w-16 h-16 rounded-full mx-auto mb-3">
+                                <h4 class="font-bold">João Marcos</h4>
+                                <p class="text-sm text-gray-600">@joaommcjm</p>
+                                <div class="mt-2">
+                                    <a href="#" class="text-blue-500 hover:text-blue-700"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <img src="https://avatars.githubusercontent.com/u/34567890?v=4" class="w-16 h-16 rounded-full mx-auto mb-3">
+                                <h4 class="font-bold">João Victor</h4>
+                                <p class="text-sm text-gray-600">@joao-victor212</p>
+                                <div class="mt-2">
+                                    <a href="#" class="text-blue-500 hover:text-blue-700"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="docker-gradient text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" alt="Docker Logo" class="h-8 mr-3">
+                        <span class="text-xl font-bold">Docker ASA</span>
+                    </div>
+                    <p class="mt-2 text-sm opacity-80">Atividade acadêmica sobre fundamentos do Docker</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-blue-200 transition duration-300">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="#" class="hover:text-blue-200 transition duration-300">
+                        <i class="fab fa-docker text-2xl"></i>
+                    </a>
+                    <a href="#" class="hover:text-blue-200 transition duration-300">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-400 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm opacity-80 mb-4 md:mb-0">© 2023 Docker Mastery - Todos os direitos reservados</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-sm hover:underline">Termos de Uso</a>
+                    <a href="#" class="text-sm hover:underline">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Mobile menu toggle (would need more implementation)
+        document.querySelector('.md\\:hidden').addEventListener('click', function() {
+            // In a real implementation, this would toggle a mobile menu
+            alert('A curiosidade matou o gato');
+        });
+
+        // Animation for terminal commands
+        const commands = document.querySelectorAll('.command');
+        commands.forEach((cmd, index) => {
+            cmd.style.animationDelay = `${index * 0.2}s`;
+            cmd.classList.add('animate-fadeIn');
+        });
+    </script>
+</body>
+</html>
