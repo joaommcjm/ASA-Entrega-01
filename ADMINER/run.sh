@@ -1,0 +1,1 @@
+docker run -d --name adminer --network asa_rede -p 8081:8080 adminer
