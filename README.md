@@ -34,6 +34,36 @@ ASA-Entrega-01/
 
 ---
 
+##    Passo a passo
+
+# ==============================================
+# 🐳 COMANDO ÚNICO PARA SUBIR TODOS OS CONTAINERS
+# ==============================================
+
+# 1️⃣ Parar e remover containers existentes
+docker stop web bind9 adminer 2>/dev/null
+docker rm web bind9 adminer 2>/dev/null
+
+# 2️⃣ Criar rede Docker (se não existir)
+docker network create asa_rede 2>/dev/null || true
+
+# 3️⃣ Construir e subir containers
+cd DNS && docker build -t meu_bind9 . && docker run -d --name bind9 --network asa_rede -p 53:53/udp meu_bind9 && cd ..
+cd WEB && docker build -t meu_web . && docker run -d --name web --network asa_rede -p 8080:80 meu_web && cd ..
+docker run -d --name adminer --network asa_rede -p 8081:8080 adminer:latest
+
+# 4️⃣ Verificar status
+echo ""
+echo "✅ CONTAINERS INICIADOS COM SUCESSO!"
+echo "===================================="
+echo "WEB:      http://localhost:8080"
+echo "Adminer:  http://localhost:8081"
+echo "           (Servidor: db, Usuário: admin, Senha: senha)"
+echo ""
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+---
+
 ## 🔧 Tecnologias Utilizadas
 
 - Docker
