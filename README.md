@@ -21,15 +21,16 @@ O principal objetivo é **sedimentar os conceitos básicos sobre Docker**, por m
 
 ```
 ASA-Entrega-01/
-├── docker/
-│   ├── container1/
-│   ├── container2/
-│   └── container3/
-├── docs/
-│   ├── apresentacao.pdf
-│   └── roteiro.md
+├── DNS/
+│   ├── Dockerfile
+│   ├── db.asa.br
+│   └── named.conf.local
+├── WEB/
+│   ├── Dockerfile
+│   └── index.html
 ├── README.md
-└── docker-compose.yml
+├── service.bat
+└── service.sh
 ```
 
 ---
